@@ -1,0 +1,540 @@
+#include <iostream>
+#include <string>
+#include <limits>
+int pepolein = 0;
+
+using namespace std;
+template<class t>
+class linkedqueue {
+
+private:
+
+	struct node {
+		t item;
+		string bookn;
+		node* next;
+	};
+
+	node* front, * back;
+
+	int size;
+
+public:
+
+	linkedqueue() :front(NULL), back(NULL), size(0)
+	{
+	}
+
+	bool is_empty()
+	{
+		//return size == 0;
+		return (back == NULL);
+		//return (front == NULL || back == NULL);
+	}
+
+	void push(t new_item,string nbook)
+	{
+		node* new_ptr = new node;
+		new_ptr->item = new_item;
+		new_ptr->bookn = nbook;
+		new_ptr->next = NULL;
+
+		if (is_empty())
+		{
+			front = back = new_ptr;
+		}
+
+		else
+		{
+			back->next = new_ptr;
+			back = new_ptr;
+		}
+		size++;
+	}
+
+	void pop()
+	{
+
+		if (is_empty())
+		{
+			cout << "the queue is empty *_* " << endl;
+		}
+		else
+		{
+			node* temp = front;
+
+			if (front == back)
+			{
+				front = back = NULL;
+			}
+			else
+			{
+				front = front->next;
+				temp->next = NULL;
+				free(temp);    //delete temp;
+			}
+			size--;
+		}
+	}
+
+	void get_front()
+	{
+		if (is_empty())
+			cout << "queue is empty ;) " << endl;
+		else
+		{
+			cout << front->item << endl;
+			cout << front->bookn<< endl;
+		}
+	}
+
+	void get_back()
+	{
+		if (is_empty())
+			cout << "queue is empty ;) " << endl;
+		else
+		{
+			cout << back->item << endl;
+			cout << front->bookn<< endl;
+		}
+	}
+
+	void clear_queue()
+	{
+		while (size != 0)
+		{
+			pop();
+		}
+		size = 0;
+	}
+
+	void get_size()
+	{
+		cout << size << endl;
+	}
+
+	void display()
+	{
+		if (is_empty())
+		{
+			cout << "queue is empty " << endl;
+		}
+		else
+		{
+			node* print = front;
+
+			cout << "Buyers Data [ ";
+			while (print != NULL)
+			{
+				cout << print->item << "/"<<print->bookn;
+				cout << ",";
+				print = print->next;
+			}
+
+			cout << "]" << endl;
+		}
+	}
+};
+template<class t>
+
+class Linkedlist {
+
+	struct node {
+		string item;
+		int num;
+		node* next;
+	};
+
+	node* head;
+	node* tail;
+	int size;
+
+public:
+	Linkedlist() {
+		head = tail = NULL;
+		size = 0;
+	}
+
+	bool isempty()
+	{
+		return size == 0;
+	}
+
+	int print_size()
+	{
+		return size;
+	}
+
+	void insertfirst(string newitem,int n) {
+		node* newnode = new node;
+		newnode->item = newitem;
+		newnode->num = n;
+
+		if (size == 0)
+		{
+			head = tail = newnode;
+			newnode->next = NULL;
+		}
+		else
+		{
+			newnode->next = head;
+			head = newnode;
+		}
+		size++;
+	}
+
+	void insertlast(string newitem,int n) {
+		node* newnode = new node;
+		newnode->item = newitem;
+		newnode->num = n;
+
+		if (size == 0)
+		{
+			head = tail = newnode;
+			newnode->next = NULL;
+		}
+		else
+		{
+			tail->next = newnode;
+			newnode->next = NULL;
+			tail = newnode;
+		}
+		size++;
+	}
+
+	void insertinpos(int pos, string newitem,int n)
+	{
+		if (pos<0 || pos>size)
+		{
+			cout << "error!! out of range in insertin ";
+		}
+
+		else
+		{
+			node* newnode = new node;
+			newnode->item = newitem;
+			newnode->num = n;
+
+			if (pos == 0)
+			{
+				insertfirst(newitem,n);
+			}
+			else if (pos == size)
+			{
+				insertlast(newitem,n);
+			}
+			else
+			{
+				node* current;
+				current = head;
+
+				for (int i = 1; i < pos; i++)
+				{
+					current = current->next;
+				}
+
+				newnode->next = current->next;
+				current->next = newnode;
+			}
+			size++;
+		}
+	}
+
+	void popfront()
+	{
+		if (size == 0)
+		{
+			cout << "list is empty in pop front ";
+		}
+		else if (size == 1)
+		{
+			free(head);
+			head = tail = NULL;
+			size--;
+		}
+		else
+		{
+			node* current = head;
+			head = head->next;
+			free(current);
+			size--;
+		}
+	}
+
+	void popback()
+	{
+		if (size == 0)
+		{
+			cout << "list is empty in pop back ";
+		}
+		else if (size == 1)
+		{
+			free(tail);
+			head = tail = NULL;
+			size--;
+		}
+		else
+		{
+			node* current = head->next;
+			node* prv = head;
+			while (current != tail)
+			{
+				prv = current;
+				current = current->next;
+			}
+			free(current);
+			prv->next = NULL;
+			tail = prv;
+			size--;
+		}
+	}
+
+	void popitem(string popitem)
+	{
+		if (isempty())
+		{
+			cout << "list is empty in pop item " << endl;
+		}
+
+		node* current, * prv;
+
+		if (head->item == popitem)
+		{
+			current = head;
+			head = head->next;
+			free(current);
+			size--;
+			if (size == 0)
+			{
+				tail = NULL;
+			}
+		}
+		else
+		{
+			current = head->next;
+			prv = head;
+
+			while (current != NULL)
+			{
+
+				if (current->item == popitem)
+					break;
+
+				prv = current;
+				current = current->next;
+			}
+			if (current == NULL)
+			{
+				cout << "not found " << endl;
+			}
+			else
+			{
+				prv->next = current->next;
+				if (tail == current)
+				{
+					tail = prv;
+				}
+				free(current);
+				size--;
+			}
+		}
+	}
+
+	int search(string item)
+	{
+		node* current = head;
+		int pos = 0;
+		while (current != NULL)
+		{
+			if (current->item == item)
+			{
+				return pos;
+			}
+			current = current->next;
+			pos++;
+		}
+		return -1;
+	}
+	
+	void search_node(string nitem)
+	{
+		node* current = new node;
+		current = head;
+		
+		while (current != NULL)
+		{
+			if (current->item == nitem)
+			{
+				if (current->num == 0)
+				{
+					cout << "the book not available\n";
+					goto jump;
+				}
+				cout <<endl<< "the book is available and we have (" << current->num << ") copies of this book"<<endl;
+				
+				current->num--;
+				break;
+			}
+			current = current->next;
+		} 
+		
+		if (current == NULL)
+		{
+			cout << "not found the book" << endl;
+
+			jump:
+			cout << "if you want to search an another book press 1 " << endl;
+			int temp;
+			cin >> temp;
+			string tempStr;
+			if (temp == 1)
+			{
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				getline(cin, tempStr);
+				search_node(tempStr);
+			}
+			else
+			{
+				return;
+			}
+		}
+	}
+
+	void display()
+	{
+		node* print = head;
+		while (print != NULL)
+		{
+			cout << print->item << "/"<<print->num<<endl;
+			print = print->next;
+		}
+		cout << endl;
+	}
+
+};
+
+
+Linkedlist<string> l;
+void enter_book_name() {
+	string bookname;
+	int nums, nbooks;
+
+	cout << "!!!you have ("; 
+	cout<<l.print_size()<< ") books in your book store"<<endl;
+
+	cout << "please enter the numbers of books that you need to enter in your book store " << endl;
+	cin >> nbooks;
+
+	for (int i = 0; i < nbooks; i++)
+	{
+		cout << "book name then numbers of copies"<<endl;
+
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		getline(cin, bookname);
+		cin >> nums;
+
+		l.insertfirst(bookname, nums);
+	}
+}
+
+linkedqueue<string> q;
+
+/*void enter_customer_name() {
+	string name;
+	cout << "please enter your name: " << endl;
+
+	while (pepolein < 5)
+	{
+		getline(cin, name);
+		q.push(name);
+		pepolein++;
+	}
+}*/
+
+/*void search_book() {
+	string bookname;
+	cout << "please enter the book name" << endl;
+	getline(cin, bookname);
+	l.search_node(bookname);
+}
+*/
+void buy_book() {
+	string namebuyer,bookname;
+	int nn;
+	l.display();
+
+	cout << "please enter customer name :";
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	getline(cin, namebuyer);
+	
+
+		cout << "please enter the book name :";
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	
+		getline(cin, bookname);
+		
+		l.search_node(bookname);
+		q.push(namebuyer, bookname);
+		cout << endl;
+	
+}
+
+int main() {
+	string n;
+	
+	l.insertfirst("rich dad & poor dad", 5);
+	l.insertfirst("automic habits", 5);
+	l.insertfirst("the art of not given a ***", 5);
+	l.insertfirst("pistachio fury", 5);
+	l.insertfirst("the five am club", 5);
+	l.insertfirst("the secret", 3);
+	l.insertfirst("tyt", 10);
+	l.insertfirst("gg", 90);
+
+	/////
+	cout << "                                                   CONTROL PANEL\n\n";
+	cout << "1. DISPLAY BOOKS\n";
+	cout << "2. ADD NEW BOOKS\n";
+	cout << "3. DELETE A BOOK \n"; 
+	cout << "4. BUY A BOOK\n";
+	cout << "5. DISPLAY BUYER DATA(name , bookname)\n";
+	cout << "6. EXIT\n\n";
+
+	
+	while (1) {
+		cout << "please enter your choice :";
+		int choice;
+		cin >> choice;
+		cout << endl;
+		switch (choice)
+		{
+		case 1:
+			l.display();
+			break;
+		case 2:
+			enter_book_name();
+			cout << "Book is Added Successfully " << endl;
+			break;
+		case 3:
+			cout << "please enter the book name :";
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			getline(cin, n);
+			l.popitem(n);
+			cout << "Book is Deleted Successfully " << endl;
+			break;
+		case 4:
+			buy_book();
+			cout << "the book is sold successfully \n" << endl;
+			break;
+		case 5:
+			q.display();
+			break;
+		case 6:
+			cout << "thanks sir :)" << endl;
+			break;
+		default:
+			cout << "\ninvalied choice" << endl;
+		}
+	}
+	
+}
