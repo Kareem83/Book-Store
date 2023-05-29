@@ -1,22 +1,17 @@
 #include <iostream>
-#include <string>
 #include <limits>
-int pepolein = 0;
-
+#include <string>
 using namespace std;
-template<class t>
+
 class linkedqueue {
-
 private:
-
 	struct node {
-		t item;
-		string bookn;
+		string customername;
+		string bookname;
 		node* next;
 	};
 
 	node* front, * back;
-
 	int size;
 
 public:
@@ -30,18 +25,17 @@ public:
 		return (back == NULL);
 	}
 
-	void push(t new_item,string nbook)
+	void push(string new_item,string nbook)
 	{
 		node* new_ptr = new node;
-		new_ptr->item = new_item;
-		new_ptr->bookn = nbook;
+		new_ptr->customername = new_item;
+		new_ptr->bookname = nbook;
 		new_ptr->next = NULL;
 
 		if (is_empty())
 		{
 			front = back = new_ptr;
 		}
-
 		else
 		{
 			back->next = new_ptr;
@@ -65,22 +59,19 @@ public:
 		{
 			node* print = front;
 
-			cout << "Buyers Data [ ";
+			cout << "Buyers Data :" << endl;
 			while (print != NULL)
 			{
-				cout <<"customer name :(" <<print->item << ") -> book name :(" << print->bookn<<")";
-				cout << "  ,  ";
+				cout << "customer name :(" << print->customername << ") -> book name :(" << print->bookname << ")" << endl;
 				print = print->next;
 			}
-
-			cout << "]" << endl;
 		}
 	}
 };
-template<class t>
 
 class Linkedlist {
 
+private:
 	struct node {
 		string item;
 		int num;
@@ -233,7 +224,7 @@ public:
 
 };
 
-Linkedlist<string> l;
+Linkedlist l;
 void enter_book_name() {
 	string bookname;
 	int nums, nbooks;
@@ -255,7 +246,7 @@ void enter_book_name() {
 	}
 }
 
-linkedqueue<string> q;
+linkedqueue q;
 void buy_book() {
 	string namebuyer,bookname;
 	int nn;
@@ -272,10 +263,11 @@ void buy_book() {
 	{
 		cout << "please enter the book name :";
 
-		//cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		//getline(cin, bookname);         <-
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		getline(cin, bookname); 
 
-		cin >> bookname;              //  <-
+		//cin >> bookname;  
+
 		l.search_node(bookname);
 		q.push(namebuyer, bookname);
 		cout << endl;
