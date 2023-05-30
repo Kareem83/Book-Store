@@ -219,7 +219,7 @@ public:
 		cout<<"Available Books:"<<endl;
 		while (print != NULL)
 		{
-			cout <<"book name: ("<< print->item << ")\t copies:("<<print->num<<")"<<endl;
+			cout <<"book name: ("<< print->item << ")\t\t\tcopies:("<<print->num<<")"<<endl;
 			print = print->next;
 		}
 		cout << endl;
@@ -282,14 +282,14 @@ void buy_book() {
 }
 
 int main() {
-	l.insertfirst("rich dad & poor dad     ", 5);
-	l.insertfirst("automic habits          ", 5);
+	l.insertfirst("rich dad & poor dad", 5);
+	l.insertfirst("automic habits", 5);
 	l.insertfirst("the art of not given a *", 5);
-	l.insertfirst("pistachio fury          ", 5);
-	l.insertfirst("the five am club        ", 5);
-	l.insertfirst("the secret              ", 3);
-	l.insertfirst("tyt                     ", 10);
-	l.insertfirst("gg                      ", 1);
+	l.insertfirst("pistachio fury", 5);
+	l.insertfirst("the five am club", 5);
+	l.insertfirst("the secret", 3);
+	l.insertfirst("tyt", 10);
+	l.insertfirst("gg", 1);
 
 	cout << "                                                  MAIN MENU\n\n";
 	cout << "1. DISPLAY BOOKS\n";
